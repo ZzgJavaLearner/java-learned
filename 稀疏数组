@@ -1,0 +1,40 @@
+ public int[][] getXishu(int nums[][]){  //获取稀疏数组
+    	//转成二维稀疏数组，压缩空间
+    	//先判断二维数组有几个不为0值(默认值都为0)
+    	
+    	List temp=new ArrayList();
+    	//集合获取数据数量
+    	for(int j=0;j<nums.length;j++) {
+    	for(int i:nums[j]) {
+    		if(i!=0) {
+    			temp.add(i);
+    		}
+    	}
+   	}
+    	//数据位置保存
+    	int location[][]=new int[temp.size()][2];   
+    	int count=0;
+    	for(int j=0;j<nums.length;j++) {
+        	for(int i=0;i<nums[0].length;i++) {
+        		if(nums[j][i]!=0) {
+        			location[count][0]=j;
+        			location[count][1]=i;
+        			count++;
+        		}
+        	}
+       	}
+    	
+    	//制作稀疏数组
+    	int xishu[][]=new int[temp.size()+1][3];
+    	//第一行三个数据分别为 行 列  数据个数
+    	xishu[0][0]=nums.length;
+    	xishu[0][1]=nums[0].length;
+    	xishu[0][2]=temp.size();                
+    	//录入数据
+    	for(int i=1;i<=temp.size();i++) {
+    		xishu[i][0]=location[i-1][0];
+    		xishu[i][1]=location[i-1][1];
+    		xishu[i][2]=(int) temp.get(i-1);
+    	}
+    	return xishu;
+    }
